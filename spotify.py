@@ -1,4 +1,4 @@
-from functools import wraps
+from functools import partial, wraps
 import json
 import urllib
 
@@ -19,7 +19,7 @@ def auth_url():
     query = urllib.parse.urlencode({
         'client_id': constants.SPOTIFY_CLIENT_ID,
         'response_type': 'code',
-        'redirect_uri': _redirect_uri(),
+        'redirect_uri': flask.url_for('authorize', _external=True),
         'scope': 'user-top-read'
     })
     return AUTH_URL + '?' + query
@@ -32,14 +32,6 @@ def authorize(code):
     flask.session['spotify_access_token'] = token_info['access_token']
     flask.session['spotify_refresh_token'] = token_info['refresh_token']
     flask.session['spotify_token_expires_at'] = token_expires_at.isoformat()
-
-
-def json_response(f):
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        response = f(*args, **kwargs)
-        return json.loads(response.content.decode())
-    return wrapper
 
 
 def using_token(f):
@@ -63,25 +55,23 @@ def _token():
     return flask.session.get('spotify_access_token')
 
 
-@json_response
 def obtain_token(code):
-    return requests.post(
+    return _post(
         TOKEN_URL,
-        {
+        data={
             'grant_type': 'authorization_code',
             'code': code,
-            'redirect_uri': _redirect_uri(),
+            'redirect_uri': flask.url_for('authorize', _external=True),
             'client_id': constants.SPOTIFY_CLIENT_ID,
             'client_secret': constants.SPOTIFY_CLIENT_SECRET
         }
     )
 
 
-@json_response
 def refresh_token(refresh_token_):
-    return requests.post(
+    return _post(
         TOKEN_URL,
-        {
+        data={
             'grant_type': 'refresh_token',
             'refresh_token': refresh_token_,
             'client_id': constants.SPOTIFY_CLIENT_ID,
@@ -91,13 +81,17 @@ def refresh_token(refresh_token_):
 
 
 @using_token
-@json_response
 def profile(token):
-    return requests.get(
-        PROFILE_URL,
-        headers={'Authorization': 'Bearer {}'.format(token)}
-    )
+    return _get(PROFILE_URL, token=token)
 
 
-def _redirect_uri():
-    return flask.url_for('authorize', _external=True)
+def _request(method, url, token=None, **kwargs):
+    if token:
+        kwargs.setdefault('headers', {})
+        kwargs['headers']['Authorization'] = 'Bearer {}'.format(token)
+
+    response = requests.request(method, url, **kwargs)
+    return json.loads(response.content.decode())
+
+_get = partial(_request, 'get')
+_post = partial(_request, 'post')
