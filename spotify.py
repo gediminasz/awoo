@@ -12,6 +12,7 @@ import constants
 AUTH_URL = 'https://accounts.spotify.com/authorize'
 TOKEN_URL = 'https://accounts.spotify.com/api/token'
 PROFILE_URL = 'https://api.spotify.com/v1/me'
+TOP_TRACKS_URL = 'https://api.spotify.com/v1/me/top/tracks'
 
 
 def auth_url():
@@ -83,6 +84,11 @@ def refresh_token(refresh_token_):
 @using_token
 def profile(token):
     return _get(PROFILE_URL, token=token)
+
+
+@using_token
+def top_tracks(token):
+    return _get(TOP_TRACKS_URL, token=token)
 
 
 def _request(method, url, token=None, **kwargs):
