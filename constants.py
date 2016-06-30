@@ -1,0 +1,7 @@
+import os
+
+SECRET_KEY = os.environ['SECRET_KEY']
+
+SPOTIFY_CLIENT_ID = os.environ['SPOTIFY_CLIENT_ID']
+SPOTIFY_CLIENT_SECRET = os.environ['SPOTIFY_CLIENT_SECRET']
+

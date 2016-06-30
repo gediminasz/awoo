@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if profile %}
+        <img src="{{ profile['images'][0]['url'] }}" alt="{{ profile['id'] }}">
+        <p>
+            Logged in as <strong>{{ profile['id'] }}</strong>
+        </p>
+    {% else %}
+        <a href="{{ spotify_auth_url }}">Login with Spotify</a>
+    {% endif %}
+{% endblock %}
