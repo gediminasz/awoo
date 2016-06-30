@@ -1,0 +1,8 @@
+$env:SECRET_KEY = "SECRET_KEY"
+$env:SPOTIFY_CLIENT_ID = "SPOTIFY_CLIENT_ID"
+$env:SPOTIFY_CLIENT_SECRET = "SPOTIFY_CLIENT_SECRET"
+
+$env:FLASK_APP = "awoo"
+$env:FLASK_DEBUG = 1
+
+python -m flask run
