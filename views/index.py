@@ -11,4 +11,3 @@ class IndexView(BaseView):
             'spotify_auth_url': spotify.auth_url()
         }
         return flask.render_template('index.html', **context)
-
