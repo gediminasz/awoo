@@ -6,6 +6,9 @@
         <p>
             Logged in as <strong>{{ profile['id'] }}</strong>
         </p>
+        <p>
+            <a href="{{ url_for('logout')}}">Logout</a>
+        </p>
 
         <h1>Top Tracks</h1>
         <ol>
