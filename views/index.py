@@ -8,7 +8,6 @@ class IndexView(BaseView):
     def get(self):
         context = {
             'profile': spotify.profile(),
-            'top_tracks': spotify.top_tracks(),
-            'spotify_auth_url': spotify.auth_url()
+            'top_tracks': spotify.top_tracks()
         }
         return flask.render_template('index.html', **context)

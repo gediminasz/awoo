@@ -16,6 +16,6 @@
             {% endfor %}
         </ol>
     {% else %}
-        <a href="{{ spotify_auth_url }}">Login with Spotify</a>
+        <a href="{{ url_for('login') }}">Login with Spotify</a>
     {% endif %}
 {% endblock %}
