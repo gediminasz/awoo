@@ -10,4 +10,4 @@ class IndexView(BaseView):
             'profile': spotify.profile(),
             'top_tracks': spotify.top_tracks()
         }
-        return flask.render_template('index.html', **context)
+        return flask.render_template('index/index.html', **context)

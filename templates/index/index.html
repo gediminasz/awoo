@@ -19,6 +19,6 @@
             {% endfor %}
         </ol>
     {% else %}
-        <a href="{{ url_for('login') }}">Login with Spotify</a>
+        {% include 'index/_login.html' %}
     {% endif %}
 {% endblock %}
