@@ -6,8 +6,21 @@ import spotify
 
 class IndexView(BaseView):
     def get(self):
+        profile = spotify.profile()
+        if profile:
+            return self._render_index(profile)
+        else:
+            return flask.render_template('login.html')
+
+    def _render_index(self, profile):
+        top_tracks = spotify.top_tracks()
+
+        for track in top_tracks['items']:
+            artist_names = (artist['name'] for artist in track['artists'])
+            track['_artist_names'] = ', '.join(artist_names)
+
         context = {
-            'profile': spotify.profile(),
-            'top_tracks': spotify.top_tracks()
+            'profile': profile,
+            'top_tracks': top_tracks
         }
-        return flask.render_template('index/index.html', **context)
+        return flask.render_template('index.html', **context)

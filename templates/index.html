@@ -1,0 +1,25 @@
+{% extends 'page.html' %}
+
+{% block page_content %}
+    <h1>Top Tracks</h1>
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>#</th>
+            <th>Song</th>
+            <th>Artist</th>
+            <th>Album</th>
+        </tr>
+        {% for track in top_tracks['items'] %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                    <a href="{{ track['external_urls']['spotify'] }}">
+                        {{ track['name'] }}
+                    </a>
+                </td>
+                <td>{{ track['_artist_names'] }}</td>
+                <td>{{ track['album']['name'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
