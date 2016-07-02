@@ -87,8 +87,11 @@ def profile(token):
 
 
 @using_token
-def top_tracks(token):
-    return _get(TOP_TRACKS_URL, token=token)
+def top_tracks(token, limit=20, offset=0, time_range='long_term'):
+    return _get(
+        TOP_TRACKS_URL,
+        params={'limit': limit, 'offset': offset, 'time_range': time_range},
+        token=token)
 
 
 def _request(method, url, token=None, **kwargs):
