@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from functools import partial, wraps
 import json
 import urllib
@@ -13,6 +14,17 @@ AUTH_URL = 'https://accounts.spotify.com/authorize'
 TOKEN_URL = 'https://accounts.spotify.com/api/token'
 PROFILE_URL = 'https://api.spotify.com/v1/me'
 TOP_TRACKS_URL = 'https://api.spotify.com/v1/me/top/tracks'
+
+TIME_RANGE_LONG_TERM = 'long_term'
+TIME_RANGE_MEDIUM_TERM = 'medium_term'
+TIME_RANGE_SHORT_TERM = 'short_term'
+TIME_RANGE_CHOICES = OrderedDict(
+    (
+        (TIME_RANGE_LONG_TERM, 'All time'),
+        (TIME_RANGE_MEDIUM_TERM, 'Last 6 months'),
+        (TIME_RANGE_SHORT_TERM, 'Last 4 weeks')
+    )
+)
 
 
 def auth_url():
@@ -87,7 +99,7 @@ def profile(token):
 
 
 @using_token
-def top_tracks(token, limit=20, offset=0, time_range='long_term'):
+def top_tracks(token, time_range, limit=20, offset=0):
     return _get(
         TOP_TRACKS_URL,
         params={'limit': limit, 'offset': offset, 'time_range': time_range},

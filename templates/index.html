@@ -2,6 +2,19 @@
 
 {% block page_content %}
     <h1>Top Tracks</h1>
+
+    <div class="u-pvm">
+        <ul class="nav nav-tabs">
+            {% for tab in time_range_tabs %}
+                <li {% if tab['active'] %}class="active"{% endif %}>
+                    <a href="{{ url_for('index', time_range=tab['time_range']) }}">
+                        {{ tab['label'] }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
     <table class="table table-striped table-hover">
         <tr>
             <th>#</th>
