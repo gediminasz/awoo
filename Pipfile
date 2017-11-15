@@ -1,0 +1,17 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+arrow = "==0.10.0"
+flask = "==0.12.2"
+gunicorn = "==19.7.1"
+requests = "==2.18.4"
+
+
+[dev-packages]
+
