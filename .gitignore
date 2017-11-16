@@ -2,3 +2,4 @@ __pycache__
 debug.log
 node_modules
 run.ps1
+static/js/bundle.js

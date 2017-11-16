@@ -1,7 +1,7 @@
 module.exports = {
-    entry: './static/js/main.js',
+    entry: './js/main.js',
     output: {
-        filename: './static/dist/bundle.js'
+        filename: './static/js/bundle.js'
     },
     module: {
       rules: [
