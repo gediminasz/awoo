@@ -32,24 +32,22 @@ class Content extends React.Component {
 }
 
 function Tabs(props) {
+    function Tab(tabProps) {
+        return (
+            <li className={props.currentTab == tabProps.alias ? "active" : ""}>
+                <a href="#" onClick={(e) => props.onClick(e, tabProps.alias)}>
+                    {tabProps.label}
+                </a>
+            </li>
+        );
+    }
+
     return (
         <div className="u-pvm">
             <ul className="nav nav-tabs">
-                <li className={props.currentTab == TAB_LONG_TERM ? "active" : ""}>
-                    <a href="#" onClick={(e) => props.onClick(e, TAB_LONG_TERM)}>
-                        All time
-                    </a>
-                </li>
-                <li className={props.currentTab == TAB_MEDIUM_TERM ? "active" : ""}>
-                    <a href="#" onClick={(e) => props.onClick(e, TAB_MEDIUM_TERM)}>
-                        Last 6 months
-                    </a>
-                </li>
-                <li className={props.currentTab == TAB_SHORT_TERM ? "active" : ""}>
-                    <a href="#" onClick={(e) => props.onClick(e, TAB_SHORT_TERM)}>
-                        Last 4 weeks
-                    </a>
-                </li>
+                <Tab alias={TAB_LONG_TERM} label="All time"/>
+                <Tab alias={TAB_MEDIUM_TERM} label="Last 6 months"/>
+                <Tab alias={TAB_SHORT_TERM} label="Last 4 weeks"/>
             </ul>
         </div>
     );
