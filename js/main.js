@@ -11,11 +11,19 @@ class Content extends React.Component {
         this.state = {
             currentTab: TAB_LONG_TERM
         };
+        this.fetchTracks();
+    }
+
+    fetchTracks() {
+        fetch('/tracks?time_range=' + this.state.currentTab, { credentials: "same-origin" })
+            .then((response) => response.json())
+            .then((data) => this.setState({ tracks: data }));
     }
 
     switchTab(e, tab) {
         e.preventDefault();
         this.setState({ currentTab: tab });
+        this.fetchTracks();
     }
 
     render() {
@@ -25,6 +33,9 @@ class Content extends React.Component {
                 <Tabs
                     currentTab={this.state.currentTab}
                     onClick={this.switchTab.bind(this)}
+                />
+                <Tracks
+                    tracks={this.state.tracks}
                 />
             </div>
         );
@@ -51,6 +62,39 @@ function Tabs(props) {
             </ul>
         </div>
     );
+}
+
+function Tracks(props) {
+    var rows = !props.tracks ? [] : props.tracks.items.map(
+        function(track) {
+            return (
+                <tr>
+                    <td></td>
+                    <td>
+                        {track.name}
+                    </td>
+                    <td></td>
+                    <td>{track.album.name}</td>
+                </tr>
+            );
+        }
+    );
+
+    return (
+        <table className="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Song</th>
+                <th>Artist</th>
+                <th>Album</th>
+            </tr>
+        </thead>
+        <tbody>
+            {rows}
+        </tbody>
+    </table>
+    )
 }
 
 ReactDOM.render(
