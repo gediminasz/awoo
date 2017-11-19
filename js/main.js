@@ -75,10 +75,10 @@ function Tracks(props) {
     }
 
     var rows = props.tracks.items.map(
-        function(track) {
+        function(track, i) {
             return (
                 <tr key={track.id}>
-                    <td></td>
+                    <td>{i + 1}.</td>
                     <td>
                         {track.name}
                     </td>
