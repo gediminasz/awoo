@@ -82,7 +82,7 @@ function Tracks(props) {
                     <td>
                         {track.name}
                     </td>
-                    <td></td>
+                    <td>{track.artists.map((artist) => artist.name).join(', ')}</td>
                     <td>{track.album.name}</td>
                 </tr>
             );
