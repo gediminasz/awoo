@@ -4,6 +4,11 @@ import ReactDOM from 'react-dom';
 const TAB_LONG_TERM = 'long_term';
 const TAB_MEDIUM_TERM = 'medium_term';
 const TAB_SHORT_TERM = 'short_term';
+const TABS = {
+    [TAB_LONG_TERM]: 'All time',
+    [TAB_MEDIUM_TERM]: 'Last 6 months',
+    [TAB_SHORT_TERM]: 'Last 4 weeks'
+}
 
 class Content extends React.Component {
     constructor(props) {
@@ -25,13 +30,12 @@ class Content extends React.Component {
 
     switchTab(e, tab) {
         e.preventDefault();
-        this.setState(
-            { currentTab: tab },
-            () => this.fetchTracks(tab)
-        );
+        this.setState({ currentTab: tab });
+        this.fetchTracks(tab);
     }
 
     render() {
+        var tracks = this.state.tracks[this.state.currentTab];
         return (
             <div>
                 <h1>Top Tracks</h1>
@@ -39,54 +43,45 @@ class Content extends React.Component {
                     currentTab={this.state.currentTab}
                     onClick={this.switchTab.bind(this)}
                 />
-                <Tracks
-                    tracks={this.state.tracks[this.state.currentTab]}
-                />
+                {tracks ? <Tracks tracks={tracks}/> : <p>Loading...</p>}
             </div>
         );
     }
 }
 
 function Tabs(props) {
-    function Tab(tabProps) {
-        return (
-            <li className={props.currentTab == tabProps.alias ? "active" : ""}>
-                <a href="#" onClick={(e) => props.onClick(e, tabProps.alias)}>
-                    {tabProps.label}
-                </a>
-            </li>
-        );
-    }
-
+    var tabs = Object.entries(TABS).map(
+        ([alias, label]) => (
+            <Tab
+                key={alias}
+                alias={alias}
+                label={label}
+                active={alias == props.currentTab}
+                onClick={props.onClick}
+            />
+        )
+    );
     return (
         <div className="u-pvm">
             <ul className="nav nav-tabs">
-                <Tab alias={TAB_LONG_TERM} label="All time"/>
-                <Tab alias={TAB_MEDIUM_TERM} label="Last 6 months"/>
-                <Tab alias={TAB_SHORT_TERM} label="Last 4 weeks"/>
+                {tabs}
             </ul>
         </div>
     );
 }
 
-function Tracks(props) {
-    if (!props.tracks) {
-        return <p>Loading...</p>;
-    }
-
-    var rows = props.tracks.items.map(
-        function(track, i) {
-            return (
-                <tr key={track.id}>
-                    <td className="track-number">{i + 1}.</td>
-                    <td className="track-name">{track.name}</td>
-                    <td className="track-artist">{track.artists.map((artist) => artist.name).join(', ')}</td>
-                    <td className="track-album">{track.album.name}</td>
-                </tr>
-            );
-        }
+function Tab(props) {
+    return (
+        <li className={props.active ? "active" : ""}>
+            <a href="#" onClick={(e) => props.onClick(e, props.alias)}>
+                {props.label}
+            </a>
+        </li>
     );
+}
 
+function Tracks(props) {
+    var rows = props.tracks.items.map((track, i) => <Track key={track.id} track={track} number={i + 1}/>);
     return (
         <table className="table table-striped table-hover">
         <thead>
@@ -102,6 +97,25 @@ function Tracks(props) {
         </tbody>
     </table>
     )
+}
+
+function Track(props) {
+    return (
+        <tr>
+            <td className="track-number">
+                {props.number}.
+            </td>
+            <td className="track-name">
+                {props.track.name}
+            </td>
+            <td className="track-artist">
+                {props.track.artists.map((artist) => artist.name).join(', ')}
+            </td>
+            <td className="track-album">
+                {props.track.album.name}
+            </td>
+        </tr>
+    );
 }
 
 ReactDOM.render(
