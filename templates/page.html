@@ -9,5 +9,7 @@
             <a href="{{ url_for('logout')}}" class="btn btn-default btn-xs">Logout</a>
         </div>
     </div>
-    {% block page_content %}{% endblock %}
+    {% block page_content %}
+        <div id="page-content"/>
+    {% endblock %}
 {% endblock %}
