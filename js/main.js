@@ -68,7 +68,7 @@ function Tracks(props) {
     var rows = !props.tracks ? [] : props.tracks.items.map(
         function(track) {
             return (
-                <tr>
+                <tr key={track.id}>
                     <td></td>
                     <td>
                         {track.name}
