@@ -3,3 +3,19 @@
     font-weight: bold;
     font-size: 10rem;
 }
+
+.track-number {
+    width: 10%;
+}
+
+.track-name {
+    width: 30%;
+}
+
+.track-artist {
+    width: 30%;
+}
+
+.track-album {
+    width: 30%;
+}

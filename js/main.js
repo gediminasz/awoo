@@ -78,12 +78,10 @@ function Tracks(props) {
         function(track, i) {
             return (
                 <tr key={track.id}>
-                    <td>{i + 1}.</td>
-                    <td>
-                        {track.name}
-                    </td>
-                    <td>{track.artists.map((artist) => artist.name).join(', ')}</td>
-                    <td>{track.album.name}</td>
+                    <td className="track-number">{i + 1}.</td>
+                    <td className="track-name">{track.name}</td>
+                    <td className="track-artist">{track.artists.map((artist) => artist.name).join(', ')}</td>
+                    <td className="track-album">{track.album.name}</td>
                 </tr>
             );
         }
