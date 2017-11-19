@@ -22,8 +22,10 @@ class Content extends React.Component {
 
     switchTab(e, tab) {
         e.preventDefault();
-        this.setState({ currentTab: tab });
-        this.fetchTracks();
+        this.setState(
+            { currentTab: tab },
+            this.fetchTracks
+        );
     }
 
     render() {
