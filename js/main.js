@@ -9,22 +9,25 @@ class Content extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentTab: TAB_LONG_TERM
+            currentTab: props.initialTab,
+            tracks: {}
         };
-        this.fetchTracks();
+        this.fetchTracks(props.initialTab);
     }
 
-    fetchTracks() {
-        fetch('/tracks?time_range=' + this.state.currentTab, { credentials: "same-origin" })
-            .then((response) => response.json())
-            .then((data) => this.setState({ tracks: data }));
+    fetchTracks(tab) {
+        if (!this.state.tracks[tab]) {
+            fetch('/tracks?time_range=' + tab, { credentials: "same-origin" })
+                .then((response) => response.json())
+                .then((data) => this.setState({ tracks: Object.assign({}, this.state.tracks, { [tab]: data })}));
+        }
     }
 
     switchTab(e, tab) {
         e.preventDefault();
         this.setState(
             { currentTab: tab },
-            this.fetchTracks
+            () => this.fetchTracks(tab)
         );
     }
 
@@ -37,7 +40,7 @@ class Content extends React.Component {
                     onClick={this.switchTab.bind(this)}
                 />
                 <Tracks
-                    tracks={this.state.tracks}
+                    tracks={this.state.tracks[this.state.currentTab]}
                 />
             </div>
         );
@@ -67,7 +70,11 @@ function Tabs(props) {
 }
 
 function Tracks(props) {
-    var rows = !props.tracks ? [] : props.tracks.items.map(
+    if (!props.tracks) {
+        return <p>Loading...</p>;
+    }
+
+    var rows = props.tracks.items.map(
         function(track) {
             return (
                 <tr key={track.id}>
@@ -100,6 +107,6 @@ function Tracks(props) {
 }
 
 ReactDOM.render(
-    <Content/>,
+    <Content initialTab={TAB_LONG_TERM}/>,
     document.getElementById('page-content')
 );
