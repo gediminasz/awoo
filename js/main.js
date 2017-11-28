@@ -17,7 +17,10 @@ class Content extends React.Component {
             currentTab: props.initialTab,
             tracks: {}
         };
-        this.fetchTracks(props.initialTab);
+    }
+
+    componentDidMount() {
+        this.fetchTracks(this.props.initialTab);
     }
 
     fetchTracks(tab) {
