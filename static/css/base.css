@@ -5,7 +5,7 @@
 }
 
 .track-number {
-    width: 10%;
+    width: 5%;
 }
 
 .track-name {
@@ -18,4 +18,8 @@
 
 .track-album {
     width: 30%;
+}
+
+.track-preview {
+    width: 5%;
 }

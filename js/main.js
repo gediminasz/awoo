@@ -15,8 +15,34 @@ class Content extends React.Component {
         super(props);
         this.state = {
             currentTab: props.initialTab,
-            tracks: {}
+            tracks: {},
+            nowPlaying: {
+                track: null,
+                audio: null
+            }
         };
+    }
+
+    // TODO extract player component or something
+
+    playPreview(track) {
+        this.stopPlayback();
+
+        const audio = new Audio(track.preview_url);
+        audio.play()
+        audio.addEventListener('ended', () => this.stopPreview());
+        this.setState({ nowPlaying: { track, audio } });
+    }
+
+    stopPreview() {
+        this.stopPlayback();
+        this.setState({ nowPlaying: { track: null, audio: null } });
+    }
+
+    stopPlayback() {
+        if (this.state.nowPlaying.audio) {
+            this.state.nowPlaying.audio.pause();
+        }
     }
 
     componentDidMount() {
@@ -46,7 +72,18 @@ class Content extends React.Component {
                     currentTab={this.state.currentTab}
                     onClick={this.switchTab.bind(this)}
                 />
-                {tracks ? <Tracks tracks={tracks}/> : <p>Loading...</p>}
+                {
+                    tracks
+                    ? (
+                        <Tracks
+                            tracks={tracks}
+                            playPreview={(track) => this.playPreview(track)}
+                            stopPreview={() => this.stopPreview()}
+                            nowPlaying={this.state.nowPlaying}
+                        />
+                    )
+                    : <p>Loading...</p>
+                }
             </div>
         );
     }
@@ -76,7 +113,11 @@ function Tabs(props) {
 function Tab(props) {
     return (
         <li className="nav-item">
-            <a className={`nav-link ${props.active ? "active" : ""}`} href="#" onClick={(e) => props.onClick(e, props.alias)}>
+            <a
+                href="#"
+                className={`nav-link ${props.active ? "active" : ""}`}
+                onClick={(e) => props.onClick(e, props.alias)}
+            >
                 {props.label}
             </a>
         </li>
@@ -84,15 +125,25 @@ function Tab(props) {
 }
 
 function Tracks(props) {
-    var rows = props.tracks.items.map((track, i) => <Track key={track.id} track={track} number={i + 1}/>);
+    var rows = props.tracks.items.map((track, i) => (
+        <Track
+            key={track.id}
+            track={track}
+            number={i + 1}
+            playPreview={() => props.playPreview(track)}
+            stopPreview={props.stopPreview}
+            isPlaying={props.nowPlaying.track && (track.id === props.nowPlaying.track.id)}
+        />
+    ));
     return (
-        <table className="table table-hover">
+        <table className="table">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Song</th>
                 <th>Artist</th>
                 <th>Album</th>
+                <th>Preview</th>
             </tr>
         </thead>
         <tbody>
@@ -116,6 +167,13 @@ function Track(props) {
             </td>
             <td className="track-album">
                 {props.track.album.name}
+            </td>
+            <td className="track-preview">
+                {props.track.preview_url && (
+                    props.isPlaying
+                    ? (<button className="btn btn-outline-light" onClick={props.stopPreview}>⏹️</button>)
+                    : (<button className="btn btn-outline-light" onClick={props.playPreview}>▶️</button>)
+                )}
             </td>
         </tr>
     );
