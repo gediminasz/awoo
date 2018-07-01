@@ -75,8 +75,8 @@ function Tabs(props) {
 
 function Tab(props) {
     return (
-        <li className={props.active ? "active" : ""}>
-            <a href="#" onClick={(e) => props.onClick(e, props.alias)}>
+        <li className="nav-item">
+            <a className={`nav-link ${props.active ? "active" : ""}`} href="#" onClick={(e) => props.onClick(e, props.alias)}>
                 {props.label}
             </a>
         </li>
@@ -86,7 +86,7 @@ function Tab(props) {
 function Tracks(props) {
     var rows = props.tracks.items.map((track, i) => <Track key={track.id} track={track} number={i + 1}/>);
     return (
-        <table className="table table-striped table-hover">
+        <table className="table table-hover">
         <thead>
             <tr>
                 <th>#</th>
