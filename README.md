@@ -2,6 +2,8 @@
 
 View your top tracks on Spotify.
 
+![screenshot](screenshot.png)
+
 https://developer.spotify.com/documentation/web-api/reference/personalization/get-users-top-artists-and-tracks/
 
 ## Development commands
