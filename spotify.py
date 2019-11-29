@@ -40,7 +40,7 @@ def auth_url():
 
 def authorize(code):
     token_info = obtain_token(code)
-    token_expires_at = arrow.utcnow().replace(seconds=token_info['expires_in'])
+    token_expires_at = arrow.utcnow().shift(seconds=token_info['expires_in'])
 
     flask.session['spotify_access_token'] = token_info['access_token']
     flask.session['spotify_refresh_token'] = token_info['refresh_token']
@@ -59,7 +59,7 @@ def _token():
     expires_at = flask.session.get('spotify_token_expires_at')
     if expires_at and (arrow.utcnow() > arrow.get(expires_at)):
         token_info = refresh_token(flask.session['spotify_refresh_token'])
-        expires_at = arrow.utcnow().replace(seconds=token_info['expires_in'])
+        expires_at = arrow.utcnow().shift(seconds=token_info['expires_in'])
         flask.session.update({
             'spotify_access_token': token_info['access_token'],
             'spotify_token_expires_at': expires_at.isoformat()
