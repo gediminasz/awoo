@@ -8,6 +8,9 @@ https://developer.spotify.com/documentation/web-api/reference/personalization/ge
 
 ## Development commands
 
-To start Flask: `run.ps1` (also see `run.ps1.template`)
+To start Flask:
+
+1. Create `.env` from `.env.template`
+2. `flask run`
 
 To build js files: `yarn` (or `yarn run webpack`)

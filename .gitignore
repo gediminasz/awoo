@@ -1,6 +1,6 @@
 __pycache__
+.env
 debug.log
 node_modules
 pyproject.toml
-run.sh
 static/js/bundle.js

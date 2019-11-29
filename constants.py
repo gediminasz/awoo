@@ -1,5 +1,9 @@
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 SECRET_KEY = os.environ['SECRET_KEY']
 
 SERVER_NAME = os.environ['SERVER_NAME']
