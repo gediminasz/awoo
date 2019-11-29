@@ -1,5 +1,6 @@
 __pycache__
 debug.log
 node_modules
-run.ps1
+pyproject.toml
+run.sh
 static/js/bundle.js

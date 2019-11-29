@@ -1,0 +1,9 @@
+export SECRET_KEY=
+export SERVER_NAME=localhost:5000
+export SPOTIFY_CLIENT_ID=
+export SPOTIFY_CLIENT_SECRET=
+
+export FLASK_APP=awoo
+export FLASK_DEBUG=1
+
+python -m flask run
