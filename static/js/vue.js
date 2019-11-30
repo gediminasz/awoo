@@ -50,9 +50,7 @@ let app = new Vue({
         },
 
         stopPlayback: function () {
-            if (this.nowPlaying.audio) {
-                this.nowPlaying.audio.pause();
-            }
+            if (this.nowPlaying.audio) this.nowPlaying.audio.pause();
         }
     },
 

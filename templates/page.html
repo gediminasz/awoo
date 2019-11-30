@@ -52,8 +52,11 @@
                     {{ track.album.name }}
                 </td>
                 <td className="track-preview">
-                    <button className="btn btn-outline-light" v-on:click="playPreview(track)">▶️</button>
-                    <button className="btn btn-outline-light" v-on:click="stopPreview">⏹️</button>
+                    <div v-if="track.preview_url">
+                        <button class="btn btn-outline-light" v-on:click="stopPreview"
+                            v-if="nowPlaying.track && (nowPlaying.track.id === track.id)">⏹️</button>
+                        <button class="btn btn-outline-light" v-on:click="playPreview(track)" v-else>▶️</button>
+                    </div>
                 </td>
             </tr>
         </tbody>
