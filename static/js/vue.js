@@ -19,9 +19,7 @@ let app = new Vue({
     },
     methods: {
         fetchTracks: function (tab) {
-            console.debug(`Fetching ${tab} tracks`);
             if (this.tracks[tab]) return;
-
             fetch('/tracks?time_range=' + tab, { credentials: "same-origin" })
                 .then((response) => response.json())
                 .then((data) => Vue.set(this.tracks, tab, data));
