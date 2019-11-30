@@ -20,12 +20,8 @@
         {% block content %}{% endblock %}
     </div>
 
-    {% if "vue" in request.args %}
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="{{ url_for('static', filename='js/vue.js')}}"></script>
-    {% else %}
-    <script src="{{ url_for('static', filename='js/bundle.js')}}"></script>
-    {% endif %}
+    <script src="{{ url_for('static', filename='js/app.js')}}"></script>
 </body>
 
 </html>

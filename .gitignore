@@ -1,7 +1,4 @@
 __pycache__
 .DS_Store
 .env
-debug.log
-node_modules
 pyproject.toml
-static/js/bundle.js

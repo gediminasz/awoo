@@ -12,5 +12,3 @@ To start Flask:
 
 1. Create `.env` from `.env.template`
 2. `flask run`
-
-To build js files: `yarn` (or `yarn run webpack`)
