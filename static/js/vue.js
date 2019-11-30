@@ -18,12 +18,16 @@ let app = new Vue({
         displayedTracks: function () { return this.tracks[this.currentTab] }
     },
     methods: {
+        switchTab: function (tab) {
+            this.currentTab = tab;
+            this.fetchTracks(tab);
+        },
         fetchTracks: function (tab) {
             if (this.tracks[tab]) return;
             fetch('/tracks?time_range=' + tab, { credentials: "same-origin" })
                 .then((response) => response.json())
                 .then((data) => Vue.set(this.tracks, tab, data));
-        }
+        },
     },
     mounted: function () {
         this.fetchTracks(this.currentTab);

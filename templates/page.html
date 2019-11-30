@@ -20,7 +20,7 @@
     <div class="u-pvm">
         <ul class="nav nav-tabs">
             <li v-for="[alias, label] in Object.entries(tabs)" class="nav-item">
-                <a href="#" :class="`nav-link ${ alias === currentTab ? 'active' : '' }`">
+                <a href="#" :class="`nav-link ${ alias === currentTab ? 'active' : '' }`" v-on:click="switchTab(alias)">
                     {{ label }}
                 </a>
             </li>
