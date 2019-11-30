@@ -1,15 +1,69 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="clearfix u-ptm">
-        <div class="float-left">
-            <strong>{{ profile['id'] }}</strong>
-        </div>
-        <div class="float-right">
-            <a href="{{ url_for('logout')}}" class="btn btn-outline-secondary btn-sm">Logout</a>
-        </div>
+<div class="clearfix u-ptm">
+    <div class="float-left">
+        <strong>{{ profile['id'] }}</strong>
     </div>
-    {% block page_content %}
-        <div id="page-content"/>
-    {% endblock %}
+    <div class="float-right">
+        <a href="{{ url_for('logout')}}" class="btn btn-outline-secondary btn-sm">Logout</a>
+    </div>
+</div>
+
+{% block page_content %}
+{% if "vue" in request.args %}
+{% raw %}
+
+<div id="app">
+    <h1>Top Tracks</h1>
+
+    <div class="u-pvm">
+        <ul class="nav nav-tabs">
+            <li v-for="[alias, label] in Object.entries(tabs)" class="nav-item">
+                <a href="#" :class="`nav-link ${ alias === currentTab ? 'active' : '' }`">
+                    {{ label }}
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <table v-if="displayedTracks" class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Song</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Preview</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(track, index) in displayedTracks.items">
+                <td className="track-number">
+                    {{ index + 1}}
+                </td>
+                <td className="track-name">
+                    {{ track.name }}
+                </td>
+                <td className="track-artist">
+                    {{ track.artists.map((artist) => artist.name).join(', ') }}
+                </td>
+                <td className="track-album">
+                    {{ track.album.name }}
+                </td>
+                <td className="track-preview">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endraw %}
+{% else %}
+
+<div id="page-content" />
+
+{% endif %}
+{% endblock %}
+
 {% endblock %}
