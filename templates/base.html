@@ -20,7 +20,11 @@
         {% block content %}{% endblock %}
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    {% if config.DEBUG %}
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    {% else %}
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+    {% endif %}
     <script src="{{ url_for('static', filename='js/app.js')}}"></script>
 </body>
 
