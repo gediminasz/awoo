@@ -2,9 +2,9 @@ const TAB_LONG_TERM = 'long_term';
 const TAB_MEDIUM_TERM = 'medium_term';
 const TAB_SHORT_TERM = 'short_term';
 const TABS = {
-    [TAB_LONG_TERM]: 'All time',
+    [TAB_SHORT_TERM]: 'Last 4 weeks',
     [TAB_MEDIUM_TERM]: 'Last 6 months',
-    [TAB_SHORT_TERM]: 'Last 4 weeks'
+    [TAB_LONG_TERM]: 'All time',
 };
 
 let app = new Vue({
@@ -12,7 +12,7 @@ let app = new Vue({
 
     data: {
         tabs: TABS,
-        currentTab: TAB_LONG_TERM,
+        currentTab: TAB_SHORT_TERM,
         tracks: {},
         nowPlaying: { track: null, audio: null }
     },
