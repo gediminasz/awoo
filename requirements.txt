@@ -1,5 +1,5 @@
-arrow==0.15.*
-flask==1.1.*
-gunicorn==20.0.*
-python-dotenv==0.10.*
-requests==2.22.*
+arrow
+flask
+gunicorn
+python-dotenv
+requests
